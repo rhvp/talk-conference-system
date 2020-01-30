@@ -9,7 +9,7 @@ router.get('/', (req, res, next)=>{
 
 router.get('/talks', talk.get_talks);
 router.get('/talks/:id', talk.get_talk_detail);
-router.get('/talk/addAttendee', talk.add_talk_attendee);
+router.put('/talk/addAttendee', talk.add_talk_attendee);
 router.delete('/talk/delete/:id', talk.delete_talk);
 router.post('/talk', talk.post_talk);
 
