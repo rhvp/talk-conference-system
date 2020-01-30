@@ -49,6 +49,7 @@
         <% } %> 
         
         <button class="btn btn-lg btn-warning add-attendees">Add Attendees To Talk</button>
+        <a class="btn btn-lg btn-danger" id="delete-talk" href="#" >Delete Talk</a>
         <ul id="all-attendees" style="display: none;">
           <% attendees.map(attendee=>{ %>
             
@@ -64,7 +65,7 @@ crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script>
   $(document).ready(()=>{
-    let talk = $('#talk-id').html();
+    let talk_id = $('#talk-id').html();
     $('.add-attendees').on('click', ()=>{
       $('#all-attendees').toggle();
     });
@@ -73,7 +74,7 @@ crossorigin="anonymous"></script>
       let attendee = e.target.id;
       $.ajax({
         type: 'GET',
-        url: '/talk/addAttendee?talk_id=' + talk + "&new_Attendee_id=" + attendee,
+        url: '/talk/addAttendee?talk_id=' + talk_id + "&new_Attendee_id=" + attendee,
         success: (res)=>{
           if(res == undefined){
             alert('Attendee has already been added!');
@@ -87,6 +88,28 @@ crossorigin="anonymous"></script>
           console.error(err);
         }
       })
+    });
+
+    $('#delete-talk').on('click', (e)=>{
+      e.preventDefault();
+      let del = confirm('Confirm Deletion');
+      if(del){
+          $.ajax({
+          type: 'DELETE',
+          url: '/talk/delete/'+talk_id,
+          success: (res)=>{
+            if(res == undefined){
+              location.replace('/talks');
+            }
+          },
+          error: (err)=>{
+            console.log('server error', error)
+          }
+        })
+      } else {
+        console.log('Deletion Canceled');
+      }
+      
     })
 })
 </script>
