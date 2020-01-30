@@ -12,11 +12,19 @@ $(document).ready(()=>{
            data: form_data,
            contentType: "application/json",
            success: (newTalk)=>{
-            console.log(newTalk);
-            location.reload();
+            let list = document.querySelector('#talk-list');
+            let item = document.createElement('a');
+            item.classList.add('list-group-item', 'list-group-item-action', 'list-group-item-primary');
+            item.setAttribute('id', newTalk._id);
+            item.href = "/talks/" + newTalk._id;
+            item.innerHTML = newTalk.title;
+            list.appendChild(item);
+            alert('Talk Added.');
+            $('#new-talk').val("");
+            $('#submit-talk').attr("disabled", false);
            },
-           error: ()=>{
-               alert('Error adding new Talk');
+           error: (err)=>{
+               alert('Server Error');
            }
        })
     })

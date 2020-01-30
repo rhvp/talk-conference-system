@@ -37,10 +37,10 @@
         <h1 class="title">Talks</h1>
         
 
-        <div class="list-group mt-30">
+        <div id="talk-list" class="list-group mt-30">
 
                 <%  for(let i=0; i<talks.length; i++) {%>
-                    <a class="list-group-item list-group-item-action list-group-item-primary talks" id=<%= talks[i]._id %> href="/talks/<%=talks[i]._id%>"><%= talks[i].title %></a>
+                    <a class="list-group-item list-group-item-action list-group-item-primary" id=<%= talks[i]._id %> href="/talks/<%=talks[i]._id%>"><%= talks[i].title %></a>
                 <% }  %>
             
         </div>

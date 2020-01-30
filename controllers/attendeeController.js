@@ -8,7 +8,7 @@ module.exports = {
     },
     post_attendee: (req, res, next)=> {
         Attendee.create(req.body).then(attendee=>{
-            res.status(200).json(attendee)
+            res.status(201).json(attendee)
         }).catch(next)
     }
 }

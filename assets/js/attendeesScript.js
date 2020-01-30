@@ -22,7 +22,17 @@ $(document).ready(()=>{
             data: form_data,
             contentType: "application/json",
             success: (attendee) => {
-                location.reload();
+                let list = document.querySelector('#attendee-list');
+                let item = document.createElement('li')
+                item.innerHTML = attendee.name;
+                item.classList.add('mt-4');
+                list.appendChild(item);
+                $('#name').val('');
+                $('#email').val('');
+                alert('New Attendee Added')
+                $('#add-new-attendee').toggle();
+                $('#submit').attr('disabled', false);
+                $('#attendees-form').toggle();
             },
             error: (err) => {
                 alert('Error Posting Attendee');

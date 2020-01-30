@@ -33,18 +33,18 @@ module.exports = {
         let new_attendee_id = req.query.new_Attendee_id;
         try {
             const talk = await Talk.findById(talk_id);
-            let n = talk.attendees.includes(new_attendee_id);
-        if(n) {
+            const attendee = await Attendee.findById(new_attendee_id);
+            let attendee_exists = talk.attendees.includes(new_attendee_id);
+        if(attendee_exists) {
             res.statusMessage = "Attendee has already been added";
             res.status(304).end();
         } else {
             talk.attendees.push(new_attendee_id)
             talk.save((err)=>{
                 if(err) {
-                    console.log(err);
-                    res.status(500);
+                    res.status(500).end();
                 }
-                res.status(201).send('Attendee Added');
+                res.status(201).send(attendee);
             });
         }
         } catch(err){

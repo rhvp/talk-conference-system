@@ -73,6 +73,7 @@ crossorigin="anonymous"></script>
     });
     $('.btn-success').on('click', (e)=>{
       e.preventDefault();
+      $('.btn-success').attr('disabled', true);
       let attendee = e.target.id;
       $.ajax({
         type: 'PUT',
@@ -80,9 +81,14 @@ crossorigin="anonymous"></script>
         success: (res)=>{
           if(res == undefined){
             alert('Attendee has already been added!');
+            $('.btn-success').attr('disabled', false);
           } else{
-            alert(res);
-            location.reload();
+            let list = document.querySelector('#talk-attendees');
+            let item = document.createElement('li');
+            item.classList.add('list-group-item');
+            item.innerHTML = res.name
+            list.appendChild(item);
+            $('.btn-success').attr('disabled', false);
           }
         },
         error: (err)=>{
