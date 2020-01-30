@@ -37,18 +37,18 @@
         <h1 class="title">Talks</h1>
         
 
-        <div>
-            <ul>
-                <% for(let i=0; i<talks.length; i++) {%>
-                    <li><a class="btn btn-primary talks mt-4" href="#" id=<%= talks[i]._id %>><%= talks[i].title %></a><button class="btn btn-sm btn-danger ml-5">Delete</button></li>
-                    <% } %>
-            </ul>
+        <div class="list-group mt-30">
+
+                <%  for(let i=0; i<talks.length; i++) {%>
+                    <a class="list-group-item list-group-item-action list-group-item-primary talks" id=<%= talks[i]._id %> href="/talks/<%=talks[i]._id%>"><%= talks[i].title %></a>
+                <% }  %>
+            
         </div>
         <form id="talk-form" class="form-inline">
             <div class="form-group">
               <input class="form-control" placeholder="Add New Talk" id="new-talk" type="text">
             </div>
-            <input class="btn btn-lg btn-success" type="submit">
+            <input class="btn btn-lg btn-success" id="submit-talk" type="submit">
         </form>
       </div>
 

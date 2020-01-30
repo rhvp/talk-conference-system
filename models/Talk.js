@@ -8,10 +8,10 @@ const talkSchema = new Schema({
         required: true
     },
     attendees:[{
-        attendee: {
+        
             type: Schema.Types.ObjectId,
             ref: 'Attendee'
-        }
+        
     }]
 })
 

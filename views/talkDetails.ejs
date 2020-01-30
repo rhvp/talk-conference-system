@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <base href="/">
+    <title><%= talk.title %></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-static-top">
+        <div class="container">
+  
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+            aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Home</a>
+          </div>
+  
+          <div class="navbar-collapse collapse" id="navbar">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/talks">Talks</a></li>
+                <li><a href="/attendees">Attendees</a></li>
+            </ul>
+          </div>
+  
+        </div>
+      </nav>
+
+      <div class="container">
+        <% if(talk) {%>
+          <h1><%= talk.title %></h1>
+          <h3>Attendees</h3>
+          <p id="talk-id" style="display: none;"><%= talk._id %></p>
+          <ul id="talk-attendees" class="list-group">
+            <% if(talk.attendees.length > 0) { for(let i=0; i<talk.attendees.length; i++) {%>
+              <li class="list-group-item" ><%= talk.attendees[i].name %></li>
+              <% } %>
+            <% } %>
+          </ul>
+          
+        <% } %> 
+        
+        <button class="btn btn-lg btn-warning add-attendees">Add Attendees To Talk</button>
+        <ul id="all-attendees" style="display: none;">
+          <% attendees.map(attendee=>{ %>
+            
+            <li><a class="btn btn-sm btn-success mt-4" id="<%= attendee._id %>" href="#"><%= attendee.name %></a></li>
+          <% }) %>
+        </ul>
+      </div>
+
+<script
+src="https://code.jquery.com/jquery-3.4.1.min.js"
+integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script>
+  $(document).ready(()=>{
+    let talk = $('#talk-id').html();
+    $('.add-attendees').on('click', ()=>{
+      $('#all-attendees').toggle();
+    });
+    $('.btn-success').on('click', (e)=>{
+      e.preventDefault();
+      let attendee = e.target.id;
+      $.ajax({
+        type: 'GET',
+        url: '/talk/addAttendee?talk_id=' + talk + "&new_Attendee_id=" + attendee,
+        success: (res)=>{
+          if(res == undefined){
+            alert('Attendee has already been added!');
+          } else{
+            alert(res);
+            location.reload();
+          }
+        },
+        error: (err)=>{
+          console.log('Server Error');
+          console.error(err);
+        }
+      })
+    })
+})
+</script>
+</body>
+</html>
