@@ -45,9 +45,9 @@
             <input class="btn btn-lg btn-success" id="submit" type="submit">
         </form>
         <div>
-            <ul id="attendee-list">
+            <ul class="list-group mt-30" id="attendee-list">
                 <% for(let i=0; i < attendees.length; i++) {%>
-                  <li class="mt-4"><%= attendees[i].name %></li>
+                  <li class="list-group-item"><%= attendees[i].name %></li>
                 <%}%>
             </ul>
         </div>
