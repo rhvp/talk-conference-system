@@ -27,5 +27,5 @@ app.use((error, req, res, next)=>{
 
 
 app.listen(port, ()=>{
-    console.log('Now Listening at: ' + 5500);
+    console.log('Now Listening at: ' + port);
 })
